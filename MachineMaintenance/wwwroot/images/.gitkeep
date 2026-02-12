@@ -1,0 +1,4 @@
+# Images folder for custom backgrounds
+# To use your own background image:
+# 1. Add your image file here (e.g., machinery-bg.jpg)
+# 2. Update site.css body background to use: url('/images/machinery-bg.jpg')

@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "Hash": "CjHGlBSiH+So5JlJbFMn9atA+Mu2mJItA91Ft98FxgI=",
+  "Source": "MachineMaintenance",
+  "BasePath": "_content/MachineMaintenance",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MachineMaintenance\\wwwroot",
+      "Source": "MachineMaintenance",
+      "ContentRoot": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\",
+      "BasePath": "_content/MachineMaintenance",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\css\\site.css",
+      "SourceId": "MachineMaintenance",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\",
+      "BasePath": "_content/MachineMaintenance",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "76hpcsa97x",
+      "Integrity": "L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\images\\.gitkeep",
+      "SourceId": "MachineMaintenance",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\",
+      "BasePath": "_content/MachineMaintenance",
+      "RelativePath": "images/#[.{fingerprint}]?.gitkeep",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "bqub6a7h9u",
+      "Integrity": "U055J706fRQk3Fe79DWqbsOQurLU1oey1zd8ygAZ+fY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\.gitkeep"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.76hpcsa97x.css",
+      "AssetFile": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7560"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Feb 2026 09:27:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "76hpcsa97x"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "7560"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Feb 2026 09:27:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE="
+        }
+      ]
+    },
+    {
+      "Route": "images/.bqub6a7h9u.gitkeep",
+      "AssetFile": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\images\\.gitkeep",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "211"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"U055J706fRQk3Fe79DWqbsOQurLU1oey1zd8ygAZ+fY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Feb 2026 09:27:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bqub6a7h9u"
+        },
+        {
+          "Name": "label",
+          "Value": "images/.gitkeep"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-U055J706fRQk3Fe79DWqbsOQurLU1oey1zd8ygAZ+fY="
+        }
+      ]
+    },
+    {
+      "Route": "images/.gitkeep",
+      "AssetFile": "D:\\outlook&onedrive\\OneDrive - Titan Company Limited\\Documents\\GitHub\\test_Teal\\MachineMaintenance\\wwwroot\\images\\.gitkeep",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "211"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"U055J706fRQk3Fe79DWqbsOQurLU1oey1zd8ygAZ+fY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 12 Feb 2026 09:27:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-U055J706fRQk3Fe79DWqbsOQurLU1oey1zd8ygAZ+fY="
+        }
+      ]
+    }
+  ]
+}
