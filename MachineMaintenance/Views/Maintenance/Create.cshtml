@@ -1,0 +1,92 @@
+@model MachineMaintenance.Models.MaintenanceRecord
+
+@{
+    ViewData["Title"] = "Create Maintenance Record";
+}
+
+<div class="header-section">
+    <h1>Log New Maintenance</h1>
+</div>
+
+<div class="section">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="MachineId"></label>
+                <input asp-for="MachineId" class="form-control" placeholder="e.g., MCH-001" />
+                <span asp-validation-for="MachineId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MachineName"></label>
+                <input asp-for="MachineName" class="form-control" placeholder="e.g., CNC Lathe" />
+                <span asp-validation-for="MachineName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MaintenanceType"></label>
+                <select asp-for="MaintenanceType" class="form-control" asp-items="Html.GetEnumSelectList<MaintenanceType>()">
+                    <option value="">Select Type</option>
+                </select>
+                <span asp-validation-for="MaintenanceType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Priority"></label>
+                <select asp-for="Priority" class="form-control" asp-items="Html.GetEnumSelectList<Priority>()">
+                    <option value="">Select Priority</option>
+                </select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ScheduledDate"></label>
+                <input asp-for="ScheduledDate" type="date" class="form-control" />
+                <span asp-validation-for="ScheduledDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Technician"></label>
+                <input asp-for="Technician" class="form-control" placeholder="e.g., John Doe" />
+                <span asp-validation-for="Technician" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EstimatedHours"></label>
+                <input asp-for="EstimatedHours" type="number" step="0.5" class="form-control" placeholder="e.g., 2.5" />
+                <span asp-validation-for="EstimatedHours" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Status"></label>
+                <select asp-for="Status" class="form-control" asp-items="Html.GetEnumSelectList<MaintenanceStatus>()">
+                    <option value="">Select Status</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter maintenance details, issues found, parts replaced, etc."></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Notes"></label>
+            <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Any additional information or observations"></textarea>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit Maintenance Log</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

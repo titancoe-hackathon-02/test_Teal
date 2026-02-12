@@ -1,0 +1,96 @@
+@model MachineMaintenance.Models.MaintenanceRecord
+
+@{
+    ViewData["Title"] = "Maintenance Details";
+}
+
+<div class="header-section">
+    <h1>Maintenance Record Details</h1>
+</div>
+
+<div class="section">
+    <div class="details-grid">
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.MachineId):</strong>
+            <span>@Html.DisplayFor(model => model.MachineId)</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.MachineName):</strong>
+            <span>@Html.DisplayFor(model => model.MachineName)</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.MaintenanceType):</strong>
+            <span>@Html.DisplayFor(model => model.MaintenanceType)</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.Priority):</strong>
+            <span>@Html.DisplayFor(model => model.Priority)</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.ScheduledDate):</strong>
+            <span>@Model.ScheduledDate.ToString("yyyy-MM-dd")</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.Technician):</strong>
+            <span>@Html.DisplayFor(model => model.Technician)</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.EstimatedHours):</strong>
+            <span>@(Model.EstimatedHours?.ToString("0.0") ?? "N/A") hours</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.ActualHours):</strong>
+            <span>@(Model.ActualHours?.ToString("0.0") ?? "N/A") hours</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.Status):</strong>
+            <span class="status-badge status-@Model.Status.ToString().ToLower()">
+                @Html.DisplayFor(model => model.Status)
+            </span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.CompletionDate):</strong>
+            <span>@(Model.CompletionDate?.ToString("yyyy-MM-dd") ?? "Not completed")</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.CreatedDate):</strong>
+            <span>@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</span>
+        </div>
+
+        <div class="detail-item">
+            <strong>@Html.DisplayNameFor(model => model.LastUpdated):</strong>
+            <span>@(Model.LastUpdated?.ToString("yyyy-MM-dd HH:mm") ?? "Never")</span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.Description))
+    {
+        <div class="detail-section">
+            <strong>@Html.DisplayNameFor(model => model.Description):</strong>
+            <p>@Html.DisplayFor(model => model.Description)</p>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Notes))
+    {
+        <div class="detail-section">
+            <strong>@Html.DisplayNameFor(model => model.Notes):</strong>
+            <p>@Html.DisplayFor(model => model.Notes)</p>
+        </div>
+    }
+
+    <div class="form-actions">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
