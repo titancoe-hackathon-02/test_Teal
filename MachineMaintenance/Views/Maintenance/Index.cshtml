@@ -1,76 +1,527 @@
 @model IEnumerable<MachineMaintenance.Models.MaintenanceRecord>
 
 @{
-    ViewData["Title"] = "Maintenance Dashboard";
+    ViewData["Title"] = "Machine Monitoring Dashboard";
 }
 
-<div class="header-section">
-    <h1>🔧 Machine Maintenance Management</h1>
-    <p>Track and manage all machine maintenance activities</p>
-</div>
+<style>
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 15px;
+        padding: 0;
+    }
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <h3>@ViewBag.TotalMachines</h3>
-        <p>Total Machines</p>
-    </div>
-    <div class="stat-card">
-        <h3>@ViewBag.CompletedThisMonth</h3>
-        <p>Completed This Month</p>
-    </div>
-    <div class="stat-card">
-        <h3>@ViewBag.PendingMaintenance</h3>
-        <p>Pending Maintenance</p>
-    </div>
-    <div class="stat-card">
-        <h3>98.5%</h3>
-        <p>Uptime</p>
-    </div>
-</div>
+    .dashboard-panel {
+        background: white;
+        border: 2px solid #333;
+        border-radius: 5px;
+        padding: 15px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
 
-<div class="section">
-    <div class="section-header">
-        <h2>Maintenance Records</h2>
-        <a asp-action="Create" class="btn btn-primary">+ New Maintenance</a>
+    .panel-header {
+        background: linear-gradient(to bottom, #e8e8e8, #c0c0c0);
+        border: 1px solid #666;
+        padding: 8px 12px;
+        margin: -15px -15px 15px -15px;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 3px 3px 0 0;
+        text-align: center;
+        color: #000;
+    }
+
+    .machine-health {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .machine-status {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .vision-data {
+        grid-column: 3;
+        grid-row: 1 / 3;
+    }
+
+    .logs-panel {
+        grid-column: 1;
+        grid-row: 2 / 4;
+    }
+
+    .semema-warning {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .loadcell-data {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    .knob-data {
+        grid-column: 3;
+        grid-row: 3;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .sfcs-panel {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    .semema-status {
+        grid-column: 3;
+        grid-row: 4;
+    }
+
+    .chart-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        margin: 20px 0;
+    }
+
+    .chart-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .info-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .color-box {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #000;
+    }
+
+    .donut-chart {
+        width: 200px;
+        height: 200px;
+        position: relative;
+    }
+
+    .status-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .status-table tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .status-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .status-table td:first-child {
+        font-weight: 600;
+        width: 40%;
+    }
+
+    .status-table td:nth-child(2) {
+        text-align: center;
+        width: 10%;
+    }
+
+    .status-table td:last-child {
+        text-align: right;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+    }
+
+    .dry-run-badge {
+        background: yellow;
+        padding: 2px 10px;
+        font-weight: bold;
+        float: right;
+        border: 1px solid #000;
+    }
+
+    .warning-box {
+        background: linear-gradient(to bottom, #ff9999, #ff6666);
+        border: 2px solid #cc0000;
+        padding: 15px;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .warning-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+        color: #000;
+    }
+
+    .warning-box p {
+        margin: 5px 0;
+        font-size: 14px;
+        font-weight: bold;
+        color: #000;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #333;
+    }
+
+    .tab {
+        padding: 8px 15px;
+        background: #d0d0d0;
+        border: 1px solid #333;
+        border-bottom: none;
+        cursor: pointer;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .tab.active {
+        background: white;
+        font-weight: bold;
+    }
+
+    .tab-content {
+        min-height: 200px;
+        padding: 10px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+
+    .knob-item {
+        background: #f0f0f0;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #999;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .vision-placeholder {
+        background: #f5f5f5;
+        border: 2px dashed #999;
+        height: 150px;
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+    }
+
+    .sfc-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .sfc-input label {
+        font-weight: 600;
+        width: 80px;
+    }
+
+    .sfc-input input {
+        flex: 1;
+        padding: 5px;
+        border: 1px solid #999;
+    }
+
+    .semema-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        font-size: 11px;
+    }
+
+    .semema-item {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .semema-label {
+        font-weight: bold;
+        text-align: center;
+        padding: 5px;
+        background: #e0e0e0;
+        border: 1px solid #999;
+    }
+
+    .semema-value {
+        text-align: center;
+        padding: 5px;
+        background: white;
+        border: 1px solid #999;
+    }
+</style>
+
+<div class="dashboard-grid">
+    <!-- Machine Health -->
+    <div class="dashboard-panel machine-health">
+        <div class="panel-header">Machine Health</div>
+        <div class="chart-container">
+            <div class="chart-info">
+                <div class="info-row">
+                    <strong>Current Shift :</strong> <span>A</span>
+                </div>
+                <div class="info-row">
+                    <div class="color-box" style="background: #00cc00;"></div>
+                    <span>Run Time : 0</span>
+                </div>
+                <div class="info-row">
+                    <div class="color-box" style="background: #ff0000;"></div>
+                    <span>Down Time : 0</span>
+                </div>
+                <div class="info-row">
+                    <div class="color-box" style="background: #ffff00;"></div>
+                    <span>Idle Time : 0</span>
+                </div>
+                <div class="info-row">
+                    <strong>Total Time : 0</strong>
+                </div>
+            </div>
+            <canvas id="healthChart" class="donut-chart"></canvas>
+        </div>
     </div>
 
-    <div class="table-container">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.MachineId)</th>
-                    <th>@Html.DisplayNameFor(model => model.MachineName)</th>
-                    <th>@Html.DisplayNameFor(model => model.MaintenanceType)</th>
-                    <th>@Html.DisplayNameFor(model => model.ScheduledDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.Technician)</th>
-                    <th>@Html.DisplayNameFor(model => model.Status)</th>
-                    <th>@Html.DisplayNameFor(model => model.Priority)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.MachineId)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MachineName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
-                        <td>@item.ScheduledDate.ToString("yyyy-MM-dd")</td>
-                        <td>@Html.DisplayFor(modelItem => item.Technician)</td>
-                        <td>
-                            <span class="status-badge status-@item.Status.ToString().ToLower()">
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </span>
-                        </td>
-                        <td>@Html.DisplayFor(modelItem => item.Priority)</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-action">View</a>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
+    <!-- Machine Status -->
+    <div class="dashboard-panel machine-status">
+        <div class="panel-header">
+            Machine Status
+            <span class="dry-run-badge">(Dry Run Mode)</span>
+        </div>
+        <table class="status-table">
+            <tr>
+                <td>Pass Count</td>
+                <td>-</td>
+                <td>00.00</td>
+            </tr>
+            <tr>
+                <td>Yield</td>
+                <td>-</td>
+                <td>00.00</td>
+            </tr>
+            <tr>
+                <td>Overall Count</td>
+                <td>-</td>
+                <td>00.00</td>
+            </tr>
+            <tr>
+                <td>CT _ Conv 1</td>
+                <td>-</td>
+                <td>00.00</td>
+            </tr>
+            <tr>
+                <td>CT _ Conv 2</td>
+                <td>-</td>
+                <td>00.00</td>
+            </tr>
+            <tr>
+                <td>UPH</td>
+                <td></td>
+                <td>00.00</td>
+            </tr>
         </table>
     </div>
+
+    <!-- Vision Data -->
+    <div class="dashboard-panel vision-data">
+        <div class="panel-header">Vision Data</div>
+        <div class="vision-placeholder">Camera Feed 1</div>
+        <div class="vision-placeholder">Camera Feed 2</div>
+    </div>
+
+    <!-- Logs Panel -->
+    <div class="dashboard-panel logs-panel">
+        <div class="tabs">
+            <div class="tab active">Running Log</div>
+            <div class="tab">Live Alarm</div>
+            <div class="tab">SFCS Log</div>
+            <div class="tab">Current Steps</div>
+        </div>
+        <div class="tab-content">
+            <strong>i>tBox>RunningLog</strong>
+        </div>
+    </div>
+
+    <!-- SEMEMA Warning -->
+    <div class="dashboard-panel semema-warning">
+        <div class="warning-box">
+            <h3>SEMEMA TIMEOUT WARNING</h3>
+            <p>Jig1 Semema Signal Not Present...!!!</p>
+            <p>Jig2 Semema Signal Not Present...!!!</p>
+        </div>
+    </div>
+
+    <!-- LoadCell Data -->
+    <div class="dashboard-panel loadcell-data">
+        <div class="panel-header">LoadCell Data</div>
+        <div style="min-height: 100px; padding: 20px; text-align: center; color: #999;">
+            No load cell data available
+        </div>
+    </div>
+
+    <!-- SFC's Panel -->
+    <div class="dashboard-panel sfcs-panel">
+        <div class="panel-header">SFC's</div>
+        <div class="sfc-input">
+            <label>JIG 1</label>
+            <input type="text" readonly />
+        </div>
+        <div class="sfc-input">
+            <label>Panel 1</label>
+            <input type="text" readonly />
+        </div>
+        <div class="sfc-input">
+            <label>JIG 2</label>
+            <input type="text" readonly />
+        </div>
+        <div class="sfc-input">
+            <label>Panel 2</label>
+            <input type="text" readonly />
+        </div>
+    </div>
+
+    <!-- Knob Data -->
+    <div class="knob-data">
+        <div class="knob-item">Z1 Knob data</div>
+        <div class="knob-item">Z5 Knob data</div>
+        <div class="knob-item">Z2 Knob data</div>
+        <div class="knob-item">Z6 Knob data</div>
+        <div class="knob-item">Z3 Knob data</div>
+        <div class="knob-item">Z7 Knob data</div>
+        <div class="knob-item">Z4 Knob data</div>
+        <div class="knob-item">Z8 Knob data</div>
+    </div>
+
+    <!-- Semema Status -->
+    <div class="dashboard-panel semema-status">
+        <div class="panel-header">Semema Status</div>
+        <div style="display: flex; justify-content: space-around; margin-bottom: 10px;">
+            <strong>Semema Input</strong>
+            <strong>Semema Output</strong>
+        </div>
+        <div class="semema-grid">
+            <div class="semema-item">
+                <div class="semema-label">Convy1 Ready to Send</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy1 Ready to Receive</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy2 Ready to Send</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy2 Ready to Receive</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy1 Ready to Receive</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy1 Ready to Send</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy2 Ready to Receive</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Convy2 Ready to Send</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Jig Convy Ready to Send</div>
+                <div class="semema-value">-</div>
+            </div>
+            <div class="semema-item">
+                <div class="semema-label">Jig Ready to Receive</div>
+                <div class="semema-value">-</div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+<script>
+    // Donut Chart
+    const canvas = document.getElementById('healthChart');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 200;
+    canvas.height = 200;
+
+    const centerX = 100;
+    const centerY = 100;
+    const radius = 80;
+    const innerRadius = 50;
+
+    const data = [
+        { color: '#ff00ff', value: 0.15 }, // Magenta
+        { color: '#330066', value: 0.10 }, // Dark purple
+        { color: '#00cc00', value: 0.25 }, // Green
+        { color: '#0000ff', value: 0.20 }, // Blue
+        { color: '#00cccc', value: 0.30 }  // Cyan
+    ];
+
+    let currentAngle = -Math.PI / 2;
+
+    data.forEach(segment => {
+        const sliceAngle = 2 * Math.PI * segment.value;
+        
+        // Draw outer arc
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+        ctx.arc(centerX, centerY, innerRadius, currentAngle + sliceAngle, currentAngle, true);
+        ctx.closePath();
+        ctx.fillStyle = segment.color;
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        currentAngle += sliceAngle;
+    });
+
+    // Draw legend
+    const legend = document.createElement('div');
+    legend.style.cssText = 'position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 5px;';
+    const colors = ['#00cccc', '#330066', '#ff00ff', '#00cc00', '#0000ff', '#00cc00', '#0000ff'];
+    colors.forEach((color, i) => {
+        const item = document.createElement('div');
+        item.style.cssText = `width: 30px; height: 15px; background: ${color}; border: 1px solid #000;`;
+        item.textContent = i + 2;
+        item.style.textAlign = 'center';
+        item.style.fontSize = '10px';
+        item.style.color = '#fff';
+        legend.appendChild(item);
+    });
+    canvas.parentElement.style.position = 'relative';
+    canvas.parentElement.appendChild(legend);
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+}

@@ -1,0 +1,135 @@
+<UserControl x:Class="MachineMaintenanceWPF.Views.MaintenanceFormView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MachineMaintenanceWPF.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1300"
+             Background="White">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Margin="0,0,0,30">
+                <TextBlock Text="Log New Maintenance" FontSize="32" FontWeight="Bold" 
+                          Foreground="#2c3e50"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Machine ID -->
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Machine ID *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding MachineId, UpdateSourceTrigger=PropertyChanged}" 
+                            Padding="8"/>
+                </StackPanel>
+
+                <!-- Machine Name -->
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Machine Name *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding MachineName, UpdateSourceTrigger=PropertyChanged}" 
+                            Padding="8"/>
+                </StackPanel>
+
+                <!-- Maintenance Type -->
+                <StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
+                    <TextBlock Text="Maintenance Type *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding MaintenanceType}" Padding="8">
+                        <ComboBox.ItemsSource>
+                            <x:Array Type="{x:Type local:MaintenanceType}">
+                                <local:MaintenanceType>Preventive</local:MaintenanceType>
+                                <local:MaintenanceType>Corrective</local:MaintenanceType>
+                                <local:MaintenanceType>Predictive</local:MaintenanceType>
+                                <local:MaintenanceType>Emergency</local:MaintenanceType>
+                            </x:Array>
+                        </ComboBox.ItemsSource>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Priority -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Priority *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding Priority}" Padding="8">
+                        <ComboBox.ItemsSource>
+                            <x:Array Type="{x:Type local:Priority}">
+                                <local:Priority>Low</local:Priority>
+                                <local:Priority>Medium</local:Priority>
+                                <local:Priority>High</local:Priority>
+                                <local:Priority>Critical</local:Priority>
+                            </x:Array>
+                        </ComboBox.ItemsSource>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Scheduled Date -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Scheduled Date *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <DatePicker SelectedDate="{Binding ScheduledDate}" Padding="8"/>
+                </StackPanel>
+
+                <!-- Technician -->
+                <StackPanel Grid.Row="1" Grid.Column="2" Margin="5">
+                    <TextBlock Text="Assigned Technician *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding Technician, UpdateSourceTrigger=PropertyChanged}" 
+                            Padding="8"/>
+                </StackPanel>
+
+                <!-- Estimated Hours -->
+                <StackPanel Grid.Row="2" Grid.Column="0" Margin="5">
+                    <TextBlock Text="Estimated Hours" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding EstimatedHours, UpdateSourceTrigger=PropertyChanged}" 
+                            Padding="8"/>
+                </StackPanel>
+
+                <!-- Status -->
+                <StackPanel Grid.Row="2" Grid.Column="1" Margin="5">
+                    <TextBlock Text="Status *" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <ComboBox SelectedItem="{Binding Status}" Padding="8">
+                        <ComboBox.ItemsSource>
+                            <x:Array Type="{x:Type local:MaintenanceStatus}">
+                                <local:MaintenanceStatus>Scheduled</local:MaintenanceStatus>
+                                <local:MaintenanceStatus>InProgress</local:MaintenanceStatus>
+                                <local:MaintenanceStatus>Completed</local:MaintenanceStatus>
+                                <local:MaintenanceStatus>Pending</local:MaintenanceStatus>
+                                <local:MaintenanceStatus>Cancelled</local:MaintenanceStatus>
+                            </x:Array>
+                        </ComboBox.ItemsSource>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Description -->
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="5">
+                    <TextBlock Text="Description" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" 
+                            TextWrapping="Wrap" AcceptsReturn="True" Height="100" 
+                            VerticalScrollBarVisibility="Auto" Padding="8"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5,20,5,5">
+                <Button Content="Submit Maintenance Log" Command="{Binding SaveCommand}"
+                       Background="#667eea" Foreground="White" Padding="20,12" 
+                       FontWeight="SemiBold" BorderThickness="0" Cursor="Hand"/>
+                <Button Content="Clear Form" Command="{Binding ClearCommand}"
+                       Background="#95a5a6" Foreground="White" Padding="20,12" 
+                       FontWeight="SemiBold" BorderThickness="0" Cursor="Hand" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

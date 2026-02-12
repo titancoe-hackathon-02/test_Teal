@@ -1,16 +1,16 @@
 ﻿<Project>
   <ItemGroup>
-    <StaticWebAssetEndpoint Include="_content/MachineMaintenance/css/site.76hpcsa97x.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"76hpcsa97x"},{"Name":"integrity","Value":"sha256-L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE="},{"Name":"label","Value":"_content/MachineMaintenance/css/site.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"7560"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Feb 2026 09:27:27 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/MachineMaintenance/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7560"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022L38BnYRQ/ppLLU91LlNgMAkUoFsHoj/Z0djg2Ib3GfE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Feb 2026 09:27:27 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-mXdwPGX6NHLnuLUMo54tVEENE4lC3vm/fEBCjdaHM\u002BE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7562"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mXdwPGX6NHLnuLUMo54tVEENE4lC3vm/fEBCjdaHM\u002BE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Feb 2026 09:55:59 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/MachineMaintenance/css/site.rffdhmjczv.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rffdhmjczv"},{"Name":"integrity","Value":"sha256-mXdwPGX6NHLnuLUMo54tVEENE4lC3vm/fEBCjdaHM\u002BE="},{"Name":"label","Value":"_content/MachineMaintenance/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"7562"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mXdwPGX6NHLnuLUMo54tVEENE4lC3vm/fEBCjdaHM\u002BE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 12 Feb 2026 09:55:59 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/MachineMaintenance/images/.bqub6a7h9u.gitkeep">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\.gitkeep'))</AssetFile>

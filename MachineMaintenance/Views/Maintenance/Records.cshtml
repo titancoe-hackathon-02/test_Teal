@@ -1,0 +1,76 @@
+@model IEnumerable<MachineMaintenance.Models.MaintenanceRecord>
+
+@{
+    ViewData["Title"] = "Maintenance Records";
+}
+
+<div class="header-section">
+    <h1>🔧 Maintenance Records</h1>
+    <p>View and manage all machine maintenance activities</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>@ViewBag.TotalMachines</h3>
+        <p>Total Machines</p>
+    </div>
+    <div class="stat-card">
+        <h3>@ViewBag.CompletedThisMonth</h3>
+        <p>Completed This Month</p>
+    </div>
+    <div class="stat-card">
+        <h3>@ViewBag.PendingMaintenance</h3>
+        <p>Pending Maintenance</p>
+    </div>
+    <div class="stat-card">
+        <h3>98.5%</h3>
+        <p>Uptime</p>
+    </div>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <h2>All Maintenance Records</h2>
+        <a asp-action="Create" class="btn btn-primary">+ New Maintenance</a>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.MachineId)</th>
+                    <th>@Html.DisplayNameFor(model => model.MachineName)</th>
+                    <th>@Html.DisplayNameFor(model => model.MaintenanceType)</th>
+                    <th>@Html.DisplayNameFor(model => model.ScheduledDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Technician)</th>
+                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.Priority)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.MachineId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MachineName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MaintenanceType)</td>
+                        <td>@item.ScheduledDate.ToString("yyyy-MM-dd")</td>
+                        <td>@Html.DisplayFor(modelItem => item.Technician)</td>
+                        <td>
+                            <span class="status-badge status-@item.Status.ToString().ToLower()">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </span>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Priority)</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn-action">View</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn-action">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn-action btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

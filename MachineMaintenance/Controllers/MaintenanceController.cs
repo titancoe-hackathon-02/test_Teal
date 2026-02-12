@@ -17,6 +17,13 @@ namespace MachineMaintenance.Controllers
         // GET: Maintenance
         public async Task<IActionResult> Index()
         {
+            // Dashboard view - no records needed
+            return View();
+        }
+
+        // GET: Maintenance/Records
+        public async Task<IActionResult> Records()
+        {
             var records = await _context.MaintenanceRecords
                 .OrderByDescending(m => m.CreatedDate)
                 .ToListAsync();
