@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Maintenance Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table thead {
+            background: #2c3e50;
+            color: white;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-scheduled {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            table th,
+            table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Machine Maintenance Management</h1>
+            <p>Track and manage all machine maintenance activities</p>
+        </div>
+
+        <div class="content">
+            <!-- Statistics Section -->
+            <div class="section">
+                <h2>Overview Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>24</h3>
+                        <p>Total Machines</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>18</h3>
+                        <p>Completed This Month</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>6</h3>
+                        <p>Pending Maintenance</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>98.5%</h3>
+                        <p>Uptime</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maintenance Form Section -->
+            <div class="section">
+                <h2>Log New Maintenance</h2>
+                <form id="maintenanceForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="machineId">Machine ID *</label>
+                            <input type="text" id="machineId" name="machineId" required placeholder="e.g., MCH-001">
+                        </div>
+                        <div class="form-group">
+                            <label for="machineName">Machine Name *</label>
+                            <input type="text" id="machineName" name="machineName" required placeholder="e.g., CNC Lathe">
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenanceType">Maintenance Type *</label>
+                            <select id="maintenanceType" name="maintenanceType" required>
+                                <option value="">Select Type</option>
+                                <option value="preventive">Preventive</option>
+                                <option value="corrective">Corrective</option>
+                                <option value="predictive">Predictive</option>
+                                <option value="emergency">Emergency</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority">Priority *</label>
+                            <select id="priority" name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scheduledDate">Scheduled Date *</label>
+                            <input type="date" id="scheduledDate" name="scheduledDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="technician">Assigned Technician *</label>
+                            <input type="text" id="technician" name="technician" required placeholder="e.g., John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="estimatedHours">Estimated Hours</label>
+                            <input type="number" id="estimatedHours" name="estimatedHours" min="0" step="0.5" placeholder="e.g., 2.5">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status *</label>
+                            <select id="status" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Enter maintenance details, issues found, parts replaced, etc."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" name="notes" placeholder="Any additional information or observations"></textarea>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary">Submit Maintenance Log</button>
+                        <button type="reset" class="btn btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Maintenance Records Section -->
+            <div class="section">
+                <h2>Recent Maintenance Records</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Machine ID</th>
+                                <th>Machine Name</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Technician</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MCH-001</td>
+                                <td>CNC Lathe</td>
+                                <td>Preventive</td>
+                                <td>2026-02-10</td>
+                                <td>John Smith</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>MCH-002</td>
+                                <td>Milling Machine</td>
+                                <td>Corrective</td>
+                                <td>2026-02-11</td>
+                                <td>Sarah Johnson</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>MCH-003</td>
+                                <td>Hydraulic Press</td>
+                                <td>Preventive</td>
+                                <td>2026-02-12</td>
+                                <td>Mike Wilson</td>
+                                <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>MCH-004</td>
+                                <td>Grinding Machine</td>
+                                <td>Emergency</td>
+                                <td>2026-02-13</td>
+                                <td>John Smith</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>Critical</td>
+                            </tr>
+                            <tr>
+                                <td>MCH-005</td>
+                                <td>Welding Robot</td>
+                                <td>Predictive</td>
+                                <td>2026-02-14</td>
+                                <td>Emily Davis</td>
+                                <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                                <td>Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handler
+        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Display confirmation
+            alert('Maintenance log submitted successfully!\n\n' + 
+                  'Machine ID: ' + data.machineId + '\n' +
+                  'Machine Name: ' + data.machineName + '\n' +
+                  'Type: ' + data.maintenanceType + '\n' +
+                  'Status: ' + data.status);
+            
+            // Reset form
+            this.reset();
+            
+            // In a real application, you would send this data to a server
+            console.log('Maintenance Data:', data);
+        });
+
+        // Set today's date as default for scheduled date
+        document.getElementById('scheduledDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>
